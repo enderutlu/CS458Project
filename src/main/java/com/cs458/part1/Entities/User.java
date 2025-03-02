@@ -27,6 +27,7 @@ public class User implements UserDetails {
     String Email;
     String PhoneNumber;
     LocalDate DateOfBirth;
+    String Password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -36,7 +37,7 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         // TODO Auto-generated method stub
-        return Name;
+        return Password;
     }
     @Override
     public String getUsername() {
