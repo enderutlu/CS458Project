@@ -1,9 +1,11 @@
 package com.cs458.part1.Controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,26 +22,34 @@ import com.cs458.part1.Repositories.UserRepository;
 public class UserController {
     
     @Autowired
-	UserRepository repo;
+    UserRepository repo;
 
     @GetMapping("/getAllUsers")
-	public List<User> get() {
-		return repo.findAll().stream().collect(Collectors.toList());
-	}
-	
-	@PostMapping("/createUser")
-	public String insert(@RequestBody User user) {
-		// User user = new User();
-		// user.setEmail("ender@gmail.com");
-		// user.setName("Ender");
-		// user.setSurname("Utlu");
-		// user.setPhoneNumber("05448242002");
-		// user.setDateOfBirth(LocalDate.of(2002, 8, 1));
-		return repo.save(user).toString();
-	}
-	
-	@DeleteMapping("/deleteUser/{id}")
-	public void delete(@PathVariable String id) {
-		repo.deleteById(id);
-	}
+    public List<User> get() {
+        return repo.findAll().stream().collect(Collectors.toList());
+    }
+    
+    @PostMapping("/createUser")
+    public String insert(@RequestBody User user) {
+        // User user = new User();
+        // user.setEmail("ender@gmail.com");
+        // user.setName("Ender");
+        // user.setSurname("Utlu");
+        // user.setPhoneNumber("05448242002");
+        // user.setDateOfBirth(LocalDate.of(2002, 8, 1));
+        return repo.save(user).toString();
+    }
+    
+    @DeleteMapping("/deleteUser/{id}")
+    public void delete(@PathVariable String id) {
+        repo.deleteById(id);
+    }
+
+    @PostMapping("/getUserByEmail")
+    public boolean getUserByEmail(@RequestBody String email) {
+        Optional<User> e = repo.findAll().stream().filter(p -> p.getEmail().equals(email)).findFirst();
+        
+        return e.isPresent();
+    }
+    
 }

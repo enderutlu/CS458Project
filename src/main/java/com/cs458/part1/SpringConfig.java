@@ -40,7 +40,7 @@ public class SpringConfig {
         return http.csrf(csrf -> csrf.disable()) // Disable CSRF for API authentication
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Use JWT instead of session
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/", "/api/login", "/oauth2/**").permitAll() // Allow login & OAuth2
+            .requestMatchers("/", "/api/login", "/user/getUserByEmail", "/oauth2/**").permitAll() // Allow login & OAuth2
             .anyRequest().authenticated() // Require authentication for all other requests
         )
         .oauth2Login(Customizer.withDefaults()) // Enable Google OAuth2 login
