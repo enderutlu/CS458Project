@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,10 +46,10 @@ public class UserController {
     }
 
     @PostMapping("/getUserByEmail")
-    public boolean getUserByEmail(@RequestBody String email) {
+    public ResponseEntity<?> getUserByEmail(@RequestBody String email) {
         Optional<User> e = repo.findAll().stream().filter(p -> p.getEmail().equals(email)).findFirst();
         
-        return e.isPresent();
+        return ResponseEntity.ok().body(e.isPresent());
     }
     
 }
