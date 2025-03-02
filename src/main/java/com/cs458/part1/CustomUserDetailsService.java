@@ -22,6 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails e = repo.findAll()
                 .stream()
+                .filter(p -> p.getEmail().equals(username))
                 .findFirst()
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return e;
